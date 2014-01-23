@@ -55,7 +55,10 @@ end
 action :before_migrate do
 
   if new_resource.npm
-    execute 'npm install' do
+    cmd = 'npm install'
+    cmd += ' ' + new_resource.npm if new_resource.npm.kind_of?(String)
+
+    execute cmd do
       cwd new_resource.release_path
       user new_resource.owner
       group new_resource.group
