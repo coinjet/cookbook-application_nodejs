@@ -28,8 +28,9 @@ action :before_compile do
     include_recipe 'nodejs::npm'
   end
 
+  r = new_resource
+
   unless new_resource.restart_command
-    r = new_resource
     new_resource.restart_command do
 
       service "#{r.application.name}_nodejs" do
@@ -42,8 +43,8 @@ action :before_compile do
   end
 
   new_resource.environment.update({
-    'NODE_ENV' => new_resource.environment_name,
-    'NODE_PATH' => [File.join(new_resource.shared_path,'.npm'),'$NODE_PATH'].join(':')
+    'NODE_ENV' => r.environment_name,
+    'NODE_PATH' => [File.join(r.shared_path,'.npm'),'$NODE_PATH'].join(':')
   })
 
 end
