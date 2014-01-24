@@ -42,7 +42,8 @@ action :before_compile do
   end
 
   new_resource.environment.update({
-    'NODE_ENV' => new_resource.environment_name
+    'NODE_ENV' => new_resource.environment_name,
+    'NODE_PATH' => [File.join(new_resource.shared_path,'.npm'),'$NODE_PATH'].join(':')
   })
 
 end
