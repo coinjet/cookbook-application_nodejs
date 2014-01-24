@@ -43,8 +43,7 @@ action :before_compile do
   end
 
   new_resource.environment.update({
-    'NODE_ENV' => r.environment_name,
-    'NODE_PATH' => [File.join(r.shared_path,'.npm'),'$NODE_PATH'].join(':')
+    'NODE_ENV' => r.environment_name
   })
 
 end
@@ -89,7 +88,7 @@ action :before_restart do
       :node_dir => node['nodejs']['dir'],
       :app_dir => new_resource.release_path,
       :entry => new_resource.entry_point,
-      :environment => new_resource.environment
+      :environment => new_resource.environment.merge({ 'NODE_PATH' => [File.join(r.shared_path,'.npm'),'$NODE_PATH'].join(':') })
     )
   end
 
