@@ -88,7 +88,7 @@ action :before_restart do
       :node_dir => node['nodejs']['dir'],
       :app_dir => new_resource.release_path,
       :entry => new_resource.entry_point,
-      :environment => new_resource.environment.merge({ 'NODE_PATH' => [File.join(new_resource.shared_path,'.npm'),'$NODE_PATH'].join(':') })
+      :environment => new_resource.environment.merge({ 'NODE_PATH' => [::File.join(new_resource.shared_path,'.npm'),'$NODE_PATH'].join(':') })
     )
   end
 
